@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Touch Detection</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      #touchArea {
+        width: 100%;
+        height: 100vh;
+        background-color: lightblue;
+        text-align: center;
+      }
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="touchArea"></div>
+
+    <script>
+      var touchArea = document.getElementById("touchArea");
+
+      touchArea.onclick = function (event) {
+        event = event || window.event;
+        event.preventDefault
+          ? event.preventDefault()
+          : (event.returnValue = false);
+        createCircle(event.clientX, event.clientY);
+      };
+
+      touchArea.ontouchstart = function (event) {
+        event = event || window.event;
+        event.preventDefault
+          ? event.preventDefault()
+          : (event.returnValue = false);
+        var touch = event.touches[0];
+        createCircle(touch.clientX, touch.clientY);
+      };
+
+      function createCircle(x, y) {
+        var circle = document.createElement("div");
+        circle.className = "circle";
+        circle.style.left = x - 10 + "px";
+        circle.style.top = y - 10 + "px";
+
+        touchArea.appendChild(circle);
+
+        setTimeout(function () {
+          touchArea.removeChild(circle);
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
